@@ -1,0 +1,87 @@
+MPLINK 4.50, Linker
+Linker Map File - Created Wed Jan 15 23:05:43 2014
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                 RES_VECT       code   0x000000    program   0x000004
+                   .cinit    romdata   0x000002    program   0x000004
+                 ISR_VECT       code   0x000004    program   0x000002
+                MAIN_CODE       code   0x000005    program   0x000320
+                 ADD_VECT       code   0x0007e0    program   0x000002
+.config_8007_BUILD/DEFAULT/PRODUCTION/MAIN.O       code   0x008007    program   0x000002
+.config_8008_BUILD/DEFAULT/PRODUCTION/MAIN.O       code   0x008008    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000194      
+                            0x0007e0    0x0007e0      
+                            0x008007    0x008008      
+            408 out of 4103 program addresses used, program memory utilization is 9%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+               Delay_10ms   0x000185    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+             Delay_10ms_0   0x000189    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                Delay_2us   0x000190    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+              Delay_2us_0   0x000192    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_003E   0x000043    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0156   0x00015b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_016A   0x00016f    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_016D   0x000172    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0172   0x000177    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_017B   0x000180    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0185   0x00018a    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0188   0x00018d    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                  dmx_add   0x0007e0    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+               dmx_listen   0x000086    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lexit   0x000168    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lmain   0x000110    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                     loff   0x000164    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lradd   0x000120    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lwadd   0x00012b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                     main   0x000084    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                prog_mode   0x0000f4    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+         read_serial_tout   0x00016b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+              send_serial   0x00017b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+            set_dutycycle   0x000087    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    setup   0x000005    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    setup   0x000005    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_003E   0x000043    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                     main   0x000084    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+               dmx_listen   0x000086    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+            set_dutycycle   0x000087    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                prog_mode   0x0000f4    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lmain   0x000110    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lradd   0x000120    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lwadd   0x00012b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0156   0x00015b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                     loff   0x000164    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                    lexit   0x000168    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+         read_serial_tout   0x00016b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_016A   0x00016f    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_016D   0x000172    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0172   0x000177    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+              send_serial   0x00017b    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_017B   0x000180    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+               Delay_10ms   0x000185    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+             Delay_10ms_0   0x000189    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0185   0x00018a    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+          _MAIN_CODE_0188   0x00018d    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                Delay_2us   0x000190    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+              Delay_2us_0   0x000192    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+                  dmx_add   0x0007e0    program     static /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm
+
+
