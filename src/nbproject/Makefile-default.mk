@@ -75,7 +75,7 @@ FIXDEPS=fixDeps
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/src.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=16f1508
-MP_LINKER_DEBUG_OPTION= -u_DEBUGDATASTART=0x165 -u_DEBUGDATALEN=0xa
+MP_LINKER_DEBUG_OPTION= -r=RAM@GPR:0x160:0x16F
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)

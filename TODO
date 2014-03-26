@@ -1,0 +1,20 @@
+#Requirements #
+- board:
+    + _OK_ power supply 12v
+    + _OK_ 4 channel pwm 8bit
+    + _OK_ bus addresable
+- hardware:
+    + _NX_ 1/8 unit load RS485 driver
+    + _OK_ led debug
+    + _OK_ led prog
+    + _OK_ high side power stage 1.5A nominal per channel
+    + _NX_ configurable constant current
+    + _OK_ MCU based
+- software:
+    + _OK_ address programable via EUSART (non volatile)
+    + precission DMX reader routine
+    + fading output / smooth changes
+- load:
+    + _OK_ closed loop load
+
+<!--- vim: set sts=4 sw=4 et ft=mkd: -->
