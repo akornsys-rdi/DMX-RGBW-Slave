@@ -1,17 +1,18 @@
 Message[303] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 32 : Program word too large.  Truncated to core size. (C984)
 Message[303] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 34 : Program word too large.  Truncated to core size. (DDFF)
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 8 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 9 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 10 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 11 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 12 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 13 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 14 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 15 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 16 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 17 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 18 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 20 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 22 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 24 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 52 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 53 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 35 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 43 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/rs485.inc 44 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 69 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 71 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 75 : Register in operand not in bank 0.  Ensure that bank bits are correct.
@@ -25,8 +26,6 @@ Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 90 : Regist
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 91 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 94 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 96 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 98 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 149 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 151 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[303] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 165 : Program word too large.  Truncated to core size. (C984)
-Message[303] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 165 : Program word too large.  Truncated to core size. (DDFF)
+Message[302] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 97 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[303] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 166 : Program word too large.  Truncated to core size. (C984)
+Message[303] /home/kwendenarmo/git-repos/DMX-RGBW-Slave/src/main.asm 166 : Program word too large.  Truncated to core size. (DDFF)

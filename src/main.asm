@@ -53,7 +53,7 @@
     #INCLUDE    "delay.inc"             ; delay lib
 
     CBLOCK  0x74                        ; posiciones comunes en bancos
-    MODE                                ; 8bit -> 0x00 // 16bit -> 0xFF
+    MODE                                ; 0x00 BYTE (RA4 HI), 0xFF WORD (RA4 LO)
     ENDC
 
 RESET_VECT  code    0x00                ; processor reset vector
@@ -69,10 +69,10 @@ setup
     movwf   OSCCON
     movlw   0x1F
     movwf   PCON
-    ;I/O
-    banksel APFCON
-    movlw   0x19
-    movwf   APFCON
+    ;I/O                                ; /SS & T1G > RA3, CLC1 > RA2, NCO1 > RC6
+    banksel APFCON                      ; PORTA --OIOOOO, digital, pullup in RA4
+    movlw   0x19                        ; PORTB OOII----, digital, pullup in RB4
+    movwf   APFCON                      ; PORTC OOOOOOOO, digital, no pullup
     banksel PORTA
     clrf    PORTA
     clrf    PORTB
@@ -90,15 +90,17 @@ setup
     movwf   WPUA
     movwf   WPUB
     banksel TRISA
-    movlw   0x14
+    movlw   0x10
     movwf   TRISA
     movlw   0x30
     movwf   TRISB
-    movlw   0x2A
-    movwf   TRISC
+    clrf    TRISC
     banksel PORTB
-    bcf     PORTB,RB6
-;    ;PWM
+    movlw   0xFF                        ; assign MODE
+    btfsc   PORTA,RA4
+    clrw
+    movwf   MODE
+    ;PWM
 ;    call    pwmlib_init
 ;    ;TIMER
 ;    banksel OPTION_REG
@@ -113,7 +115,7 @@ setup
 ;    movlw   0xC1
 ;    movwf   T1GCON
 ;    ;USART
-    call    rs485_init
+    call    RS485_init
 ;    ;INT
 ;    banksel PIE1
 ;    clrf    PIE1
@@ -144,11 +146,6 @@ setup
 ;    call    dmx_add
 ;    movwf   DMX_ADDRESS
 ;DEBUG
-    banksel TRISA
-    movlw   0x10
-    movwf   TRISA
-    movlw   0x00
-    movwf   TRISC
     banksel PORTA
     bsf     pwmr
     bsf     pwmg
@@ -158,8 +155,12 @@ setup
     return
 
 main
-    movlw   0x30
-;    call    rs485_sendbyte
+    call    RS485_avail
+    andlw   0xFF
+    btfss   STATUS,Z
+    goto    main
+    call    RS485_read
+    call    RS485_send
     goto    main
 
     END                                 ; End of code

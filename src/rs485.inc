@@ -1,11 +1,7 @@
-; * * *
-; %%SECTION_HEADER%%
-; %%EOS_HEADER%%
-; * * *
 
 RS485_LIB   code                        ; let linker place main program
 
-rs485_init
+RS485_init
     ;setup 250kb 9bit
     banksel SPBRGL
     movlw   0x0F
@@ -27,33 +23,29 @@ rs485_init
     bcf     drvdir
     return
 
-read_serial_tout
-;    movlw   0x01
-;    movwf   PROG_TIMEOUT
-;    banksel PIR1
-;    btfsc   PIR1,RCIF
-;    goto    $+9
-;    incf    PROG_TIMEOUT,F
-;    btfss   STATUS,Z
-;    goto    $+4
-;    movlw   CMD_TOUT
-;    call    send_serial
-;    reset
-;    call    Delay_10ms
-;    goto    $-9
-;    banksel RCREG
-;    movf    RCREG,W
+RS485_avail
+    movlw   0x00
+    banksel PIR1
+    btfsc   PIR1,RCIF
+    movlw   0xFF
     return
 
-rs485_sendbyte
+RS485_read
+    banksel RCREG
+    movf    RCREG,W
+    return
+
+RS485_send
     banksel PORTB
     bsf     drvdir
+    nop
     banksel TXREG
     movwf   TXREG
     btfss   TXSTA,TRMT
     goto    $-1
     nop
     banksel PORTB
+    nop
     bcf     drvdir
     return
 

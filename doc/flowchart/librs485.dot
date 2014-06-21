@@ -1,0 +1,93 @@
+digraph librs485 {
+
+	/*
+	 * BLOCK DEFINITIONS
+	 */
+
+	//terminator
+	node[shape=ellipse, style=filled, fillcolor=firebrick1];
+	librs485_send_1 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><I>byte</I><FONT FACE="courier">)</FONT>
+		>];
+	librs485_send_5 [label=<
+		Return
+		>];
+	librs485_read_1 [label=<
+		<FONT FACE="courier">RS485_read()</FONT>
+		>];
+	librs485_read_3 [label=<
+		Return <I><byte/I>
+		>];
+	librs485_avail_1 [label=<
+		<FONT FACE="courier">RS485_avail()</FONT>
+		>];
+	librs485_avail_3 [label=<
+		Return <B>FALSE</B>
+		>];
+	librs485_avail_4 [label=<
+		Return <B>TRUE</B>
+		>];
+	librs485_init_1 [label=<
+		<FONT FACE="courier">RS485_init()</FONT>
+		>];
+	librs485_init_6 [label=<
+		Return
+		>];
+
+	//instruction
+	node[shape=box, style=filled, fillcolor=seagreen1];
+	librs485_init_2 [label=<
+		Set <B>BRG</B> to 250kbps
+		>];
+	librs485_init_3 [label=<
+		Set frame to 8N2
+		>];
+	librs485_init_4 [label=<
+		Enable RX<BR />
+		Enable TX
+		>];
+
+	//I/O
+	node[shape=parallelogram, style=filled, fillcolor=grey80];
+	librs485_send_2 [label=<
+		Set driver to output
+		>];
+	librs485_send_3 [label=<
+		Send <I>byte</I><BR />
+		Wait until send
+		>];
+	librs485_send_4 [label=<
+		Set driver to input
+		>];
+	librs485_read_2 [label=<
+		Read byte
+		>];
+	librs485_init_5 [label=<
+		Set driver to input
+		>];
+
+	//conditionals
+	node[shape=diamond, style=filled, fillcolor=palegoldenrod];
+	librs485_avail_2 [label=<
+		<B>RCIF</B> == <B>TRUE</B>?
+		>];
+
+	/*
+	 * FLOWCHART
+	 */
+
+	//librs485 INIT
+	librs485_init_1 -> librs485_init_2 -> librs485_init_3 -> librs485_init_4 -> librs485_init_5 -> librs485_init_6;
+	//librs485 SEND
+	librs485_send_1 -> librs485_send_2 -> librs485_send_3 -> librs485_send_4 -> librs485_send_5;
+	//librs485 READ
+	librs485_read_1 -> librs485_read_2 -> librs485_read_3;
+	//librs485 AVAILABLE
+	librs485_avail_1 -> librs485_avail_2;
+	librs485_avail_2 -> librs485_avail_3 [label=<
+		no
+		>];
+	librs485_avail_2 -> librs485_avail_4 [label=<
+		yes
+		>];
+}

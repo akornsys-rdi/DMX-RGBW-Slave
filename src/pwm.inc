@@ -4,6 +4,14 @@
 ; * * *
 
     CBLOCK  0x28
+    PWMRDATL
+    PWMRDATH
+    PWMGDATL
+    PWMGDATH
+    PWMBDATL
+    PWMBDATH
+    PWMWDATL
+    PWMWDATH
     PWM_DCRL
     PWM_DCRH
     PWM_DCGL
@@ -15,12 +23,22 @@
     PWM_AUX
     ENDC
 
-PWM_LIB   code                        ; let linker place main program
-
+PWM_LIB   code                          ; let linker place main program
+                                        
 pwmlib_init
-    banksel PWM1CON
-    clrf    PWM1CON
-    clrf    PWM2CON
+    movf    MODE,W
+    btfss   STATUS,Z
+    goto    L_WORD
+    banksel TRISA
+    movf    TRISA,W
+    iorlw   0x04
+    movwf   TRISA
+    movf    TRISC,W
+    iorlw   0x2A
+    movwf   TRISC
+    banksel PWM1CON                     ; initialize pwm1-4 modules
+    clrf    PWM1CON                     ; prescale 4 pr2 255 freq 3906Hz
+    clrf    PWM2CON                     ; output active low enabled
     clrf    PWM3CON
     clrf    PWM4CON
     banksel PR2
@@ -60,6 +78,8 @@ pwmlib_init
     movwf   PWM3CON
     movwf   PWM4CON
     return
+L_WORD
+    return
 
 set_dutycycle
     ;copy
@@ -80,6 +100,15 @@ set_dutycycle
     movwf   PWM_DCWL
     movf    DMX_DATWH,W
     movwf   PWM_DCWH
+    ;8bits?
+    movf    MODE,W
+    btfss   STATUS,Z
+    goto    L_CONT ;$+5
+    clrf    PWM_DCRH
+    clrf    PWM_DCGH
+    clrf    PWM_DCBH
+    clrf    PWM_DCWH
+L_CONT
     ;align R
     movlw   0x03
     andwf   PWM_DCRH,F

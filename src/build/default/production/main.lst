@@ -1,4 +1,4 @@
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  1
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ Message[303]: Program word too large.  Truncated to core size. (DDFF)
                       00039     #DEFINE     icpvpp  PORTA,RA3       ; RA3 <- ICSP VPP
                       00040     #DEFINE     mode    PORTA,RA4       ; RA4 <- BYTE/WORD MODE
                       00041     #DEFINE     debug   PORTA,RA5       ; RA5 -> DEBUG
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  2
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -72,84 +72,77 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00048     #DEFINE     pwmr    PORTC,RC5       ; RC5 -> PWM R-CHANNEL
                       00049 
                       00050     #INCLUDE    "rs485.inc"             ; serial rs485 lib
-                      00001 ; * * *
-                      00002 ; %%SECTION_HEADER%%
-                      00003 ; %%EOS_HEADER%%
-                      00004 ; * * *
-                      00005 
-                      00006 RS485_LIB   code                        ; let linker place main program
-                      00007 
-0000                  00008 rs485_init
-                      00009     ;setup 250kb 9bit
-0000   0023           00010     banksel SPBRGL
-0001   300F           00011     movlw   0x0F
+                      00001 
+                      00002 RS485_LIB   code                        ; let linker place main program
+                      00003 
+0000                  00004 RS485_init
+                      00005     ;setup 250kb 9bit
+0000   0023           00006     banksel SPBRGL
+0001   300F           00007     movlw   0x0F
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0002   009B           00012     movwf   SPBRGL
+0002   009B           00008     movwf   SPBRGL
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0003   019C           00013     clrf    SPBRGH
+0003   019C           00009     clrf    SPBRGH
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0004   121E           00014     bcf     TXSTA,SYNC
+0004   121E           00010     bcf     TXSTA,SYNC
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0005   179D           00015     bsf     RCSTA,SPEN
+0005   179D           00011     bsf     RCSTA,SPEN
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0006   169E           00016     bsf     TXSTA,TXEN
+0006   169E           00012     bsf     TXSTA,TXEN
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0007   161D           00017     bsf     RCSTA,CREN
+0007   161D           00013     bsf     RCSTA,CREN
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0008   151E           00018     bsf     TXSTA,BRGH
-0009   3008           00019     movlw   0x08
+0008   151E           00014     bsf     TXSTA,BRGH
+0009   3008           00015     movlw   0x08
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-000A   009F           00020     movwf   BAUDCON
-000B   3064           00021     movlw   0x64
+000A   009F           00016     movwf   BAUDCON
+000B   3064           00017     movlw   0x64
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-000C   009E           00022     movwf   TXSTA
-000D   30D0           00023     movlw   0xD0
+000C   009E           00018     movwf   TXSTA
+000D   30D0           00019     movlw   0xD0
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-000E   009D           00024     movwf   RCSTA
-                      00025     ;driver as receiver
-000F   0020           00026     banksel PORTB
-0010   130D           00027     bcf     drvdir
-0011   0008           00028     return
-                      00029 
-0012                  00030 read_serial_tout
-                      00031 ;    movlw   0x01
-                      00032 ;    movwf   PROG_TIMEOUT
-                      00033 ;    banksel PIR1
-                      00034 ;    btfsc   PIR1,RCIF
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  3
+000E   009D           00020     movwf   RCSTA
+                      00021     ;driver as receiver
+000F   0020           00022     banksel PORTB
+0010   130D           00023     bcf     drvdir
+0011   0008           00024     return
+                      00025 
+0012                  00026 RS485_avail
+0012   3000           00027     movlw   0x00
+0013   0020           00028     banksel PIR1
+0014   1A91           00029     btfsc   PIR1,RCIF
+0015   30FF           00030     movlw   0xFF
+0016   0008           00031     return
+                      00032 
+0017                  00033 RS485_read
+0017   0023           00034     banksel RCREG
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00035 ;    goto    $+9
-                      00036 ;    incf    PROG_TIMEOUT,F
-                      00037 ;    btfss   STATUS,Z
-                      00038 ;    goto    $+4
-                      00039 ;    movlw   CMD_TOUT
-                      00040 ;    call    send_serial
-                      00041 ;    reset
-                      00042 ;    call    Delay_10ms
-                      00043 ;    goto    $-9
-                      00044 ;    banksel RCREG
-                      00045 ;    movf    RCREG,W
-0012   0008           00046     return
-                      00047 
-0013                  00048 rs485_sendbyte
-0013   0020           00049     banksel PORTB
-0014   170D           00050     bsf     drvdir
-0015   0023           00051     banksel TXREG
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0016   009A           00052     movwf   TXREG
+0018   0819           00035     movf    RCREG,W
+0019   0008           00036     return
+                      00037 
+001A                  00038 RS485_send
+001A   0020           00039     banksel PORTB
+001B   170D           00040     bsf     drvdir
+001C   0000           00041     nop
+001D   0023           00042     banksel TXREG
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0017   1C9E           00053     btfss   TXSTA,TRMT
-0018   2???           00054     goto    $-1
-0019   0000           00055     nop
-001A   0020           00056     banksel PORTB
-001B   130D           00057     bcf     drvdir
-001C   0008           00058     return
-                      00059 
-                      00060 ; vim: set ts=4 sw=4 et foldmethod=syntax ft=mpasm:
+001E   009A           00043     movwf   TXREG
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+001F   1C9E           00044     btfss   TXSTA,TRMT
+0020   2???           00045     goto    $-1
+0021   0000           00046     nop
+0022   0020           00047     banksel PORTB
+0023   0000           00048     nop
+0024   130D           00049     bcf     drvdir
+0025   0008           00050     return
+                      00051 
+                      00052 ; vim: set ts=4 sw=4 et foldmethod=syntax ft=mpasm:
                       00051 ;    #INCLUDE    "prog.inc"              ; prog-lib
                       00052 ;    #INCLUDE    "pwm.inc"               ; pwm-lib
                       00053     #INCLUDE    "delay.inc"             ; delay lib
@@ -175,12 +168,6 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0005   2???           00020     goto    $+2
 0006   0BF1           00021     decfsz  DLOOP2,F
 0007   2???           00022     goto    Delay_10ms_0
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  4
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
 0008   2???           00023     goto    $+1
 0009   0000           00024     nop
 000A   0008           00025     return
@@ -188,6 +175,12 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000B                  00027 Delay_2us
 000B   3019           00028     movlw   0x19
 000C   00F0           00029     movwf   DLOOP1
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
 000D                  00030 Delay_2us_0
 000D   0BF0           00031     decfsz  DLOOP1,F
 000E   2???           00032     goto    Delay_2us_0
@@ -196,7 +189,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00035 ; vim: set ts=4 sw=4 et foldmethod=syntax ft=mpasm: 
                       00054 
                       00055     CBLOCK  0x74                        ; posiciones comunes en bancos
-  00000074            00056     MODE                                ; 8bit -> 0x00 // 16bit -> 0xFF
+  00000074            00056     MODE                                ; 0x00 BYTE (RA4 HI), 0xFF WORD (RA4 LO)
                       00057     ENDC
                       00058 
                       00059 RESET_VECT  code    0x00                ; processor reset vector
@@ -214,11 +207,11 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0003   301F           00070     movlw   0x1F
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0004   0096           00071     movwf   PCON
-                      00072     ;I/O
-0005   0022           00073     banksel APFCON
-0006   3019           00074     movlw   0x19
+                      00072     ;I/O                                ; /SS & T1G > RA3, CLC1 > RA2, NCO1 > RC6
+0005   0022           00073     banksel APFCON                      ; PORTA --OIOOOO, digital, pullup in RA4
+0006   3019           00074     movlw   0x19                        ; PORTB OOII----, digital, pullup in RB4
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0007   009D           00075     movwf   APFCON
+0007   009D           00075     movwf   APFCON                      ; PORTC OOOOOOOO, digital, no pullup
 0008   0020           00076     banksel PORTA
 0009   018C           00077     clrf    PORTA
 000A   018D           00078     clrf    PORTB
@@ -234,12 +227,6 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0011   018C           00085     clrf    ANSELA
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  5
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
 0012   018D           00086     clrf    ANSELB
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0013   018E           00087     clrf    ANSELC
@@ -247,96 +234,101 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 0015   3010           00089     movlw   0x10
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 0016   008C           00090     movwf   WPUA
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0017   008D           00091     movwf   WPUB
-0018   0021           00092     banksel TRISA
-0019   3014           00093     movlw   0x14
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001A   008C           00094     movwf   TRISA
-001B   3030           00095     movlw   0x30
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001C   008D           00096     movwf   TRISB
-001D   302A           00097     movlw   0x2A
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001E   008E           00098     movwf   TRISC
-001F   0020           00099     banksel PORTB
-0020   130D           00100     bcf     PORTB,RB6
-                      00101 ;    ;PWM
-                      00102 ;    call    pwmlib_init
-                      00103 ;    ;TIMER
-                      00104 ;    banksel OPTION_REG
-                      00105 ;    movlw   0x01
-                      00106 ;    movwf   OPTION_REG
-                      00107 ;    banksel TMR0
-                      00108 ;    movlw   TMR_PRL
-                      00109 ;    movwf   TMR0
-                      00110 ;    movlw   0x14
-                      00111 ;    movwf   T1CON
-                      00112 ;    bsf     T1CON,TMR1ON
-                      00113 ;    movlw   0xC1
-                      00114 ;    movwf   T1GCON
-                      00115 ;    ;USART
-0021   2???           00116     call    rs485_init
-                      00117 ;    ;INT
-                      00118 ;    banksel PIE1
-                      00119 ;    clrf    PIE1
-                      00120 ;    clrf    PIE2
-                      00121 ;    clrf    PIE3
-                      00122 ;    banksel PIR1
-                      00123 ;    clrf    PIR1
-                      00124 ;    clrf    PIR2
-                      00125 ;    clrf    PIR3
-                      00126 ;    banksel IOCAP
-                      00127 ;    clrf    IOCAP
-                      00128 ;    clrf    IOCAN
-                      00129 ;    clrf    IOCAF
-                      00130 ;    clrf    IOCBP
-                      00131 ;    movlw   0x10
-                      00132 ;    movwf   IOCBN
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  6
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00133 ;    clrf    IOCBF
-                      00134 ;    movlw   0x88
-                      00135 ;    movwf   INTCON
-                      00136 ;    ; valores por defecto
-                      00137 ;    banksel PORTA
-                      00138 ;    clrf    MODE
-                      00139 ;    movlw   0xFF
-                      00140 ;    btfss   PORTA,RA4
-                      00141 ;    movwf   MODE
-                      00142 ;    movlw   HIGH dmx_add
-                      00143 ;    movwf   PCLATH
-                      00144 ;    call    dmx_add
-                      00145 ;    movwf   DMX_ADDRESS
-                      00146 ;DEBUG
-0022   0021           00147     banksel TRISA
-0023   3010           00148     movlw   0x10
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0024   008C           00149     movwf   TRISA
-0025   3000           00150     movlw   0x00
+0017   008D           00091     movwf   WPUB
+0018   0021           00092     banksel TRISA
+0019   3010           00093     movlw   0x10
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0026   008E           00151     movwf   TRISC
-0027   0020           00152     banksel PORTA
-0028   168E           00153     bsf     pwmr
-0029   158E           00154     bsf     pwmg
-002A   150C           00155     bsf     pwmb
-002B   148E           00156     bsf     pwmw
-                      00157 ;DEBUG
-002C   0008           00158     return
-                      00159 
-002D                  00160 main
-002D   3030           00161     movlw   0x30
-                      00162 ;    call    rs485_sendbyte
-002E   2???           00163     goto    main
-                      00164 
+001A   008C           00094     movwf   TRISA
+001B   3030           00095     movlw   0x30
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+001C   008D           00096     movwf   TRISB
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+001D   018E           00097     clrf    TRISC
+001E   0020           00098     banksel PORTB
+001F   30FF           00099     movlw   0xFF                        ; assign MODE
+0020   1A0C           00100     btfsc   PORTA,RA4
+0021   0103           00101     clrw
+0022   00F4           00102     movwf   MODE
+                      00103     ;PWM
+                      00104 ;    call    pwmlib_init
+                      00105 ;    ;TIMER
+                      00106 ;    banksel OPTION_REG
+                      00107 ;    movlw   0x01
+                      00108 ;    movwf   OPTION_REG
+                      00109 ;    banksel TMR0
+                      00110 ;    movlw   TMR_PRL
+                      00111 ;    movwf   TMR0
+                      00112 ;    movlw   0x14
+                      00113 ;    movwf   T1CON
+                      00114 ;    bsf     T1CON,TMR1ON
+                      00115 ;    movlw   0xC1
+                      00116 ;    movwf   T1GCON
+                      00117 ;    ;USART
+0023   2???           00118     call    RS485_init
+                      00119 ;    ;INT
+                      00120 ;    banksel PIE1
+                      00121 ;    clrf    PIE1
+                      00122 ;    clrf    PIE2
+                      00123 ;    clrf    PIE3
+                      00124 ;    banksel PIR1
+                      00125 ;    clrf    PIR1
+                      00126 ;    clrf    PIR2
+                      00127 ;    clrf    PIR3
+                      00128 ;    banksel IOCAP
+                      00129 ;    clrf    IOCAP
+                      00130 ;    clrf    IOCAN
+                      00131 ;    clrf    IOCAF
+                      00132 ;    clrf    IOCBP
+                      00133 ;    movlw   0x10
+                      00134 ;    movwf   IOCBN
+                      00135 ;    clrf    IOCBF
+                      00136 ;    movlw   0x88
+                      00137 ;    movwf   INTCON
+                      00138 ;    ; valores por defecto
+                      00139 ;    banksel PORTA
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00140 ;    clrf    MODE
+                      00141 ;    movlw   0xFF
+                      00142 ;    btfss   PORTA,RA4
+                      00143 ;    movwf   MODE
+                      00144 ;    movlw   HIGH dmx_add
+                      00145 ;    movwf   PCLATH
+                      00146 ;    call    dmx_add
+                      00147 ;    movwf   DMX_ADDRESS
+                      00148 ;DEBUG
+0024   0020           00149     banksel PORTA
+0025   168E           00150     bsf     pwmr
+0026   158E           00151     bsf     pwmg
+0027   150C           00152     bsf     pwmb
+0028   148E           00153     bsf     pwmw
+                      00154 ;DEBUG
+0029   0008           00155     return
+                      00156 
+002A                  00157 main
+002A   2???           00158     call    RS485_avail
+002B   39FF           00159     andlw   0xFF
+002C   1D03           00160     btfss   STATUS,Z
+002D   2???           00161     goto    main
+002E   2???           00162     call    RS485_read
+002F   2???           00163     call    RS485_send
+0030   2???           00164     goto    main
+                      00165 
 Message[303]: Program word too large.  Truncated to core size. (C984)
 Message[303]: Program word too large.  Truncated to core size. (DDFF)
-0984 1DFF             00165     END                                 ; End of code
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  7
+0984 1DFF             00166     END                                 ; End of code
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  7
 
 
 SYMBOL TABLE
@@ -395,7 +387,7 @@ BKA14                             00000006
 BKA2                              00000002
 BKA3                              00000003
 BKA4                              00000004
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  8
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  8
 
 
 SYMBOL TABLE
@@ -454,7 +446,7 @@ C2PCH0                            00000004
 C2PCH1                            00000005
 C2POL                             00000004
 C2SP                              00000002
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE  9
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE  9
 
 
 SYMBOL TABLE
@@ -513,7 +505,7 @@ CLC4POL                           00000F29
 CLC4SEL0                          00000F2A
 CLC4SEL1                          00000F2B
 CLCDATA                           00000F0F
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 10
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 10
 
 
 SYMBOL TABLE
@@ -572,7 +564,7 @@ DACOE2                            00000004
 DACPSS                            00000002
 DACR0                             00000000
 DACR1                             00000001
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 11
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 11
 
 
 SYMBOL TABLE
@@ -631,7 +623,7 @@ FVRRDY                            00000006
 G1ARSEN                           00000006
 G1ASDLA0                          00000004
 G1ASDLA1                          00000005
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 12
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 12
 
 
 SYMBOL TABLE
@@ -690,7 +682,7 @@ IOCAF                             00000393
 IOCAF0                            00000000
 IOCAF1                            00000001
 IOCAF2                            00000002
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 13
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 13
 
 
 SYMBOL TABLE
@@ -749,7 +741,7 @@ LATC                              0000010E
 LATC0                             00000000
 LATC1                             00000001
 LATC2                             00000002
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 14
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 14
 
 
 SYMBOL TABLE
@@ -808,7 +800,7 @@ LC1G4D2N                          00000002
 LC1G4D2T                          00000003
 LC1G4D3N                          00000004
 LC1G4D3T                          00000005
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 15
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 15
 
 
 SYMBOL TABLE
@@ -867,7 +859,7 @@ LC2G3D4T                          00000007
 LC2G3POL                          00000002
 LC2G4D1N                          00000000
 LC2G4D1T                          00000001
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 16
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 16
 
 
 SYMBOL TABLE
@@ -926,7 +918,7 @@ LC3G3D2T                          00000003
 LC3G3D3N                          00000004
 LC3G3D3T                          00000005
 LC3G3D4N                          00000006
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 17
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 17
 
 
 SYMBOL TABLE
@@ -985,7 +977,7 @@ LC4G2POL                          00000001
 LC4G3D1N                          00000000
 LC4G3D1T                          00000001
 LC4G3D2N                          00000002
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 18
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 18
 
 
 SYMBOL TABLE
@@ -1044,7 +1036,7 @@ N1PWS2                            00000007
 NCO1ACC                           00000498
 NCO1ACC0                          00000000
 NCO1ACC1                          00000001
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 19
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 19
 
 
 SYMBOL TABLE
@@ -1103,7 +1095,7 @@ NOT_POR                           00000001
 NOT_RI                            00000002
 NOT_RMCLR                         00000003
 NOT_RWDT                          00000004
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 20
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 20
 
 
 SYMBOL TABLE
@@ -1162,7 +1154,7 @@ PWM1DCH3                          00000003
 PWM1DCH4                          00000004
 PWM1DCH5                          00000005
 PWM1DCH6                          00000006
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 21
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 21
 
 
 SYMBOL TABLE
@@ -1221,7 +1213,7 @@ PWM4DCH2                          00000002
 PWM4DCH3                          00000003
 PWM4DCH4                          00000004
 PWM4DCH5                          00000005
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 22
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 22
 
 
 SYMBOL TABLE
@@ -1261,6 +1253,10 @@ RCIF                              00000005
 RCREG                             00000199
 RCSTA                             0000019D
 RD                                00000000
+RS485_avail                       00000012
+RS485_init                        00000000
+RS485_read                        00000017
+RS485_send                        0000001A
 RSEN                              00000001
 RSTVEC                            00000000
 RX9                               00000006
@@ -1276,16 +1272,16 @@ SCS0                              00000000
 SCS1                              00000001
 SDAHT                             00000003
 SEN                               00000000
-SENDB                             00000003
-SMP                               00000007
-SOSCR                             00000007
-SPBRG                             0000019B
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 23
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SENDB                             00000003
+SMP                               00000007
+SOSCR                             00000007
+SPBRG                             0000019B
 SPBRGH                            0000019C
 SPBRGL                            0000019B
 SPEN                              00000007
@@ -1335,16 +1331,16 @@ T1GPOL                            00000006
 T1GSEL                            00000003
 T1GSPM                            00000004
 T1GSS0                            00000000
-T1GSS1                            00000001
-T1GTM                             00000005
-T1GVAL                            00000002
-T1OSCEN                           00000003
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 24
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T1GSS1                            00000001
+T1GTM                             00000005
+T1GVAL                            00000002
+T1OSCEN                           00000003
 T2CKPS0                           00000000
 T2CKPS1                           00000001
 T2CON                             0000001C
@@ -1394,16 +1390,16 @@ TRISC                             0000008E
 TRISC0                            00000000
 TRISC1                            00000001
 TRISC2                            00000002
-TRISC3                            00000003
-TRISC4                            00000004
-TRISC5                            00000005
-TRISC6                            00000006
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 25
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISC3                            00000003
+TRISC4                            00000004
+TRISC5                            00000005
+TRISC6                            00000006
 TRISC7                            00000007
 TRIS_ICDCLK                       00000002
 TRIS_ICDDAT                       00000003
@@ -1453,16 +1449,16 @@ Z                                 00000002
 Z_SHAD                            00000002
 _BOREN_NSLEEP                     0000FDFF
 _BOREN_OFF                        0000F9FF
-_BOREN_ON                         0000FFFF
-_BOREN_SBODEN                     0000FBFF
-_BORV_HI                          0000FBFF
-_BORV_LO                          0000FFFF
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 26
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_BOREN_ON                         0000FFFF
+_BOREN_SBODEN                     0000FBFF
+_BORV_HI                          0000FBFF
+_BORV_LO                          0000FFFF
 _CLKOUTEN_OFF                     0000FFFF
 _CLKOUTEN_ON                      0000F7FF
 _CONFIG1                          00008007
@@ -1496,7 +1492,7 @@ _MCLRE_OFF                        0000FFBF
 _MCLRE_ON                         0000FFFF
 _PWRTE_OFF                        0000FFFF
 _PWRTE_ON                         0000FFDF
-_RS485_LIB_0018                   00000018
+_RS485_LIB_0020                   00000020
 _STVREN_OFF                       0000FDFF
 _STVREN_ON                        0000FFFF
 _WDTE_NSLEEP                      0000FFF7
@@ -1512,29 +1508,26 @@ addprg                            PORTB,RB4
 commrx                            PORTB,RB5
 commtx                            PORTB,RB7
 debug                             PORTA,RA5
-drvdir                            PORTB,RB6
-icpclk                            PORTA,RA1
-icpdat                            PORTA,RA0
-icpvpp                            PORTA,RA3
-MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   3-6-2014  23:08:12         PAGE 27
+MPASM 5.54  /HOME/KWENDENARMO/GIT-REPOS/DMX-   4-5-2014  21:10:03         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-main                              0000002D
+drvdir                            PORTB,RB6
+icpclk                            PORTA,RA1
+icpdat                            PORTA,RA0
+icpvpp                            PORTA,RA3
+main                              0000002A
 mode                              PORTA,RA4
 pwmb                              PORTA,RA2
 pwmg                              PORTC,RC3
 pwmr                              PORTC,RC5
 pwmw                              PORTC,RC1
-read_serial_tout                  00000012
-rs485_init                        00000000
-rs485_sendbyte                    00000013
 setup                             00000000
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :    32 reported,     0 suppressed
+Messages :    31 reported,     0 suppressed
 
 

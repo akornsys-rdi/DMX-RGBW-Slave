@@ -1,0 +1,184 @@
+digraph libprog {
+
+	/*
+	 * BLOCK DEFINITIONS
+	 */
+
+	//terminator
+	node[shape=ellipse, style=filled, fillcolor=firebrick1];
+	libprog_mode_1 [label=<
+		<FONT FACE="courier">Prog_mode()</FONT>
+		>];
+	libprog_mode_22 [label=<
+		<FONT FACE="courier">Prog_exit()</FONT>
+		>];
+	libprog_rxtout_1 [label=<
+		<FONT FACE="courier">Prog_timeout()</FONT>
+		>];
+	libprog_rxtout_7 [label=<
+		Return
+		>];
+	libprog_rxtout_8 [label=<
+		<FONT FACE="courier">Prog_exit()</FONT>
+		>];
+	libprog_exit_1 [label=<
+		<FONT FACE="courier">Prog_exit()</FONT>
+		>];
+	libprog_exit_4 [label=<
+		<FONT FACE="courier">Reset</FONT>
+		>];
+	
+	//instruction
+	node[shape=box, style=filled, fillcolor=seagreen1];
+	libprog_mode_15 [label=<
+		Erase value in <B>ADDRESS</B>
+		>];
+	libprog_mode_16 [label=<
+		Write <I>byte</I> in <B>ADDRESS</B>
+		>];
+	libprog_mode_17 [label=<
+		Read value in <B>ADDRESS</B>
+		>];
+	libprog_rxtout_5 [label=<
+		Decrement <I>preload</I>
+		>];
+	libprog_exit_2 [label=<
+		Clear <B>IOCBF</B>
+		>];
+
+	/*
+	//comment
+	node[shape=note, style=filled, fillcolor=khaki1];
+	comment;
+	*/
+
+	//conditionals
+	node[shape=diamond, style=filled, fillcolor=palegoldenrod];
+	libprog_mode_5 [label=<
+		Value of <I>byte</I>
+		>];
+	libprog_mode_9 [label=<
+		Value of <I>byte</I>
+		>];
+	libprog_rxtout_3 [label=<
+		<FONT FACE="courier">RS485_avail()</FONT> == <B>TRUE</B>?
+		>]
+	libprog_rxtout_6 [label=<
+		<I>preload</I> == 0?
+		>];
+
+	//I/O
+	node[shape=parallelogram, style=filled, fillcolor=grey80];
+	libprog_mode_2 [label=<
+		Set <B>DEBUG</B>
+		>];
+	libprog_exit_3 [label=<
+		Clear <B>DEBUG</B>
+		>];
+
+	//preparation
+	node[shape=hexagon, style=filled, fillcolor=pink];
+	libprog_rxtout_2 [label=<
+		Charge <B>TOUT</B> as preload value
+		>];
+
+	//module
+	node[shape=record, style=filled, fillcolor=lightskyblue];
+	libprog_mode_3 [label=<
+		<FONT FACE="courier">RS485_init()</FONT>
+		>];
+	libprog_mode_4 [label=<
+		<FONT FACE="courier">Prog_timeout()</FONT>
+		>];
+	libprog_mode_6 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_SIGN</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_7 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_ACK</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_8 [label=<
+		<FONT FACE="courier">Prog_timeout()</FONT>
+		>];
+	libprog_mode_10 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_RADD</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_11 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_ACK</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_12 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_WADD</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_13 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_ACK</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_14 [label=<
+		<FONT FACE="courier">Prog_timeout()</FONT>
+		>];
+	libprog_mode_18 [label=<
+		<FONT FACE="courier">RS485_send(</FONT>Value in <B>ADDRESS</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_19 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_OFF</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_20 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_ACK</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_mode_21 [label=<
+		<FONT FACE="courier">RS485_send(</FONT><B>CMD_NCK</B><FONT FACE="courier">)</FONT>
+		>];
+	libprog_rxtout_4 [label=<
+		<FONT FACE="courier">RS485_read()</FONT>
+		>];
+
+	/*
+	//manual
+	node[shape=invtrapezium, style=filled, fillcolor=mediumpurple2]
+	manual;
+	*/
+
+	//libprog MODE
+	libprog_mode_1 -> libprog_mode_2 -> libprog_mode_3 -> libprog_mode_4 -> libprog_mode_5;
+	libprog_mode_5 -> libprog_mode_6 [label=<
+		<B>CMD_SIGN</B>
+		>];
+	libprog_mode_6 -> libprog_mode_7 -> libprog_mode_8 -> libprog_mode_9;
+	libprog_mode_9 -> libprog_mode_10 [label=<
+		<B>CMD_RADD</B>
+		>];
+	libprog_mode_9 -> libprog_mode_12 [label=<
+		<B>CMD_WADD</B>
+		>];
+	libprog_mode_9 -> libprog_mode_19 [label=<
+		<B>CMD_OFF</B>
+		>];
+	libprog_mode_9 -> libprog_mode_21 [label=<
+		other
+		>];
+	libprog_mode_10 -> libprog_mode_11 -> libprog_mode_17;
+	libprog_mode_12 -> libprog_mode_13 -> libprog_mode_14 -> libprog_mode_15 -> libprog_mode_16 -> libprog_mode_17;
+	libprog_mode_17 -> libprog_mode_18 -> libprog_mode_7;
+	libprog_mode_19 -> libprog_mode_20 -> libprog_mode_22;
+	libprog_mode_21 -> libprog_mode_4;
+	libprog_mode_5 -> libprog_mode_22 [label=<
+		other
+		>];
+	//libprog_mode_c3 -> libprog_mode_3 [style=dotted];
+	//libprog RXTOUT
+	libprog_rxtout_1 -> libprog_rxtout_2 -> libprog_rxtout_3;
+	libprog_rxtout_3 -> libprog_rxtout_4 [label=<
+		yes
+		>];
+	libprog_rxtout_3 -> libprog_rxtout_5 [label=<
+		no
+		>];
+	libprog_rxtout_5 -> libprog_rxtout_6;
+	libprog_rxtout_4 -> libprog_rxtout_7;
+	libprog_rxtout_6 -> libprog_rxtout_8 [label=<
+		yes
+		>];
+	libprog_rxtout_6 -> libprog_rxtout_3 [label=<
+		no
+		>];
+	//libprog EXIT
+	libprog_exit_1 -> libprog_exit_2 -> libprog_exit_3 -> libprog_exit_4;
+}

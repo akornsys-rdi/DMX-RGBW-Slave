@@ -1,0 +1,53 @@
+digraph libpwm {
+
+	/*
+	 * BLOCK DEFINITIONS
+	 */
+
+	//terminator
+	node[shape=ellipse, style=filled, fillcolor=firebrick1];
+	libpwm_init_1 [label=<
+		<FONT FACE="courier">PWM_init()</FONT>
+		>];
+	
+	/*
+	//instruction
+	node[shape=box, style=filled, fillcolor=seagreen1];
+	instruction;
+	*/
+
+	/*
+	//comment
+	node[shape=note, style=filled, fillcolor=khaki1];
+	comment;
+	*/
+
+	//conditionals
+	node[shape=diamond, style=filled, fillcolor=palegoldenrod];
+	libpwm_init_2 [label=<
+		<I>mode</I> == <B>8bit</B>?
+		>];
+
+	//I/O
+	node[shape=parallelogram, style=filled, fillcolor=grey80];
+
+	//preparation
+	node[shape=hexagon, style=filled, fillcolor=pink];
+
+	//module
+	node[shape=record, style=filled, fillcolor=lightskyblue];
+
+	/*
+	//manual
+	node[shape=invtrapezium, style=filled, fillcolor=mediumpurple2]
+	manual;
+	*/
+
+	//libpwm INIT
+	libpwm_init_1 -> libpwm_init_2;
+	libpwm_init_2 -> libpwm_init_3 [label=<
+		yes
+		>];
+	
+	//libprog_mode_c3 -> libprog_mode_3 [style=dotted];
+}
